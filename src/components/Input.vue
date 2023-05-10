@@ -11,6 +11,12 @@
 </template>
 
 <script>
+/* para usarlo con options api se lo usa de esta forma
+  hay que crear una computada con mapStores y alli hacer referencia a la tienda 
+  se la pueda usar con el nombre que le pusimos uniendo la palabra Store
+*/
+import { mapStores } from 'pinia'
+import { useNotesStore } from '../storePinia.js'
 export default {
   name: "Input",
   mounted() {
@@ -21,12 +27,14 @@ export default {
       input: "",
     }
   },
+  computed: {
+    ...mapStores(useNotesStore)
+  },
   methods: {
     monitorEnterKey() {
       //código
-      this.$store.dispatch("addNote", this.input)
-      this.$store.dispatch("addTimestamp", new Date().toLocaleString())
-
+      this.notesStore.addNote(this.input);
+      this.notesStore.addTimestamp(new Date().toLocaleString());
       this.input = ""
     },
     resize() {

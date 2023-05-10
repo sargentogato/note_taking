@@ -23,15 +23,18 @@
 import Input from "./components/Input.vue"
 import NoteCountComponent from "./components/Note-count-component.vue"
 
+import { mapStores } from 'pinia'
+import { useNotesStore } from './storePinia.js'
 export default {
   name: "App",
   components: { Input, NoteCountComponent },
   computed: {
+    ...mapStores(useNotesStore),
     notes() {
-      return this.$store.getters.getNotes
+      return this.notesStore.getNotes
     },
     timestamps() {
-      return this.$store.getters.getTimestamps
+      return this.notesStore.getTimestamps
     },
   },
 }
